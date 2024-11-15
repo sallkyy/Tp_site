@@ -81,16 +81,17 @@
         text-decoration: none;
         transition: color 0.3s ease;
       }
-
+      
       .login-container a:hover {
         color: #4d45b2;
       }
     </style>
   </head>
   <body>
+    
     <div class="login-container">
       <h1>Вход в систему</h1>
-      <form action="login.php" method="POST">
+      <form action="" method="POST">
         <input type="text" name="login" placeholder="Логин" required/>
         <input type="password" name="password" placeholder="Пароль" required />
         <button type="submit">Войти</button>
