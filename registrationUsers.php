@@ -92,7 +92,7 @@
 </nav>
     <div class="form-container">
         <h2>Регистрация работников</h2>
-        <form action="registrationAdmin.php" method="post">
+        <form action="/src/registration.php" method="post">
             <div class="form-group">
                 <label for="fio">ФИО</label>
                 <input type="text" id="fio" name="fio" required>

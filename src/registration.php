@@ -12,4 +12,8 @@ if(empty($login)|| empty($password)||empty($fio)||empty($position)){
 } 
 $sql="INSERT INTO UsersAdmin (fio, position, login,password) VALUES ('$fio','position','$login','$password')" ;
 
-$conn -> query($sql);
+if($conn -> query($sql) ===TRUE){
+    echo "Успешная регистрация";
+}else{
+    echo "Ошибка: " . $conn->erorr;
+}

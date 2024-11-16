@@ -91,7 +91,7 @@
     
     <div class="login-container">
       <h1>Вход в систему</h1>
-      <form action="" method="POST">
+      <form action="/src/login.php" method="POST">
         <input type="text" name="login" placeholder="Логин" required/>
         <input type="password" name="password" placeholder="Пароль" required />
         <button type="submit">Войти</button>
