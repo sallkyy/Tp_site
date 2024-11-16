@@ -1,11 +1,11 @@
 <?php
-session_start();
-if (!isset($_SESSION['user'])) {
-    header("Location: login.php");
-    exit();
-}
-$user = $_SESSION['user'];
+require_once('db.php');
+
+// Получаем всех пользователей из базы данных
+$sql = "SELECT id, role, login FROM bez_reg";
+$result = $conn->query($sql);
 ?>
+
 <!DOCTYPE html>
 <html lang="ru">
   <head>
@@ -134,35 +134,50 @@ $user = $_SESSION['user'];
           </div>
           <div class="offcanvas-body">
             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/registrationUsers.html">Зарегистрировать нового пользователя</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/src/manage_users.php">Составить список рабочих</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Составить список изделий</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Составить список деталей</a>
-              </li>
-              <li class="nav-item">
+            <li class="nav-item">
+                      <a class="nav-link" href="/src/admin_panel.php">Панель администратора</a>
+            </li>
+            <li class="nav-item">
                   <a class="nav-link text-danger" href="/src/logout.php">Выйти</a>
-              </li>
-            </ul> 
+            </li>      
           </div>
         </div>
       </div>
     </nav>
+    <div class="container mt-5">
+    <h1 class="mb-4">Управление пользователями</h1>
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Логин</th>
+            <th>Роль</th>
+            <th>Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php if ($result->num_rows > 0): ?>
+            <?php while ($row = $result->fetch_assoc()): ?>
+                <tr>
+                    <td><?= $row['id'] ?></td>
+                    <td><?= $row['login'] ?></td>
+                    <td><?= $row['role'] ?></td>
+                    <td>
+                        <a href="edit_user.php?id=<?= $row['id'] ?>" class="btn btn-primary btn-sm">Редактировать</a>
+                        <a href="delete_user.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Удалить пользователя?')">Удалить</a>
+                    </td>
+                </tr>
+            <?php endwhile; ?>
+        <?php else: ?>
+            <tr>
+                <td colspan="4" class="text-center">Нет пользователей</td>
+            </tr>
+        <?php endif; ?>
+        </tbody>
+    </table>
+    <a href="add_user.php" class="btn btn-success">Добавить пользователя</a>
+</div>
 
-    <p>Добро пожаловать, <?php echo htmlspecialchars($user['login']); ?>!</p>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-      crossorigin="anonymous"
-    ></script>
-  </body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+</body>
 </html>
-
-
-

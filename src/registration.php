@@ -7,7 +7,7 @@ $login = trim($_POST['login']);
 $password = trim($_POST['password']);
 
 if (empty($login) || empty($password) || empty($role)) {
-    echo "Заполните все поля.";
+    header("Location: /src/register_form.php?error=Заполните все поля");
     exit();
 }
 
@@ -21,9 +21,9 @@ $stmt->bind_param("sss", $role, $login, $hashedPassword);
 
 // Выполняем запрос и проверяем результат
 if ($stmt->execute()) {
-    echo "Успешная регистрация";
+    header("Location: /registrationUsers.html?success=Успешная регистрация");
 } else {
-    echo "Ошибка: " . $stmt->error;
+    header("Location: /registrationUsers.html?error=Ошибка регистрации: " . urlencode($stmt->error));
 }
 
 $stmt->close();
